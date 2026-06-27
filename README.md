@@ -34,14 +34,15 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 
 	sdk "github.com/DataCube/consultasdeveiculos-sdk-golang"
 )
 
 func main() {
-	// Inicializa com token obrigatório
+	// Inicializa com o token (carregado automaticamente do arquivo .env ou do ambiente)
 	client, err := sdk.NewClient(sdk.Options{
-		AuthToken: "SEU_TOKEN_AQUI",
+		AuthToken: os.Getenv("API_TOKEN"),
 	})
 	if err != nil {
 		fmt.Printf("Erro de inicialização: %v\n", err)
@@ -106,8 +107,8 @@ func main() {
 
 ```go
 client, err := sdk.NewClient(sdk.Options{
-	AuthToken:           "TOKEN",    // Obrigatório em produção
-	Sandbox:             false,      // Modo sandbox (padrão: false)
+	AuthToken:           os.Getenv("API_TOKEN"), // Carregado do arquivo .env ou do ambiente (obrigatório em produção)
+	Sandbox:             false,                  // Modo sandbox (padrão: false)
 	BaseURL:             "URL",      // URL base customizada (opcional)
 	Timeout:             30000,      // Timeout das requisições (padrão: 30s)
 	MaxRetries:          3,          // Máximo de retries (padrão: 3)
